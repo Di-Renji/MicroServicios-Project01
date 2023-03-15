@@ -2,7 +2,6 @@ package com.org.user.controller;
 
 import com.org.user.entity.User;
 import com.org.user.service.UserService;
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
