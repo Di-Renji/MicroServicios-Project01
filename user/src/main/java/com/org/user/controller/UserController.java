@@ -1,6 +1,8 @@
 package com.org.user.controller;
 
 import com.org.user.entity.User;
+import com.org.user.model.Bike;
+import com.org.user.model.Car;
 import com.org.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +40,28 @@ public class UserController {
         User userNew = userService.registrar(user);
         return ResponseEntity.ok(userNew);
     }
+
+    // ****** REST TEMPLATE ***********
+
+    @GetMapping("/cars/{userId}")
+    public ResponseEntity<List<Car>> getCars(@PathVariable("userId") int userId){
+        User user = userService.buscar(userId);
+        if (user == null){
+            return ResponseEntity.notFound().build();
+        }
+        List<Car> cars = userService.getCars(userId);
+        return ResponseEntity.ok(cars);
+    }
+
+    @GetMapping("/bikes/{userId}")
+    public ResponseEntity<List<Bike>> getBikes(@PathVariable("userId") int userId){
+        User user = userService.buscar(userId);
+        if (user == null){
+            return ResponseEntity.notFound().build();
+        }
+        List<Bike> bikes = userService.getBikes(userId);
+        return ResponseEntity.ok(bikes);
+    }
+
+
 }
