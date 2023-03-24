@@ -1,6 +1,8 @@
 package com.org.user.service;
 
 import com.org.user.entity.User;
+import com.org.user.feignclients.BikeFeignClient;
+import com.org.user.feignclients.CarFeignClient;
 import com.org.user.model.Bike;
 import com.org.user.model.Car;
 import com.org.user.repository.UserRepository;
@@ -15,9 +17,12 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    CarFeignClient carFeignClient;
+    @Autowired
+    BikeFeignClient bikeFeignClient;
 
 
     public List<User> listar(){
@@ -42,6 +47,20 @@ public class UserService {
     public List<Bike> getBikes(int userId){
         List<Bike> bikes = restTemplate.getForObject("http://localhost:8003/bike/byuser/" + userId, List.class);
         return bikes;
+    }
+
+    // Feign Client
+
+    public Car saveCar(int userId, Car car){
+        car.setUserId(userId);
+        Car carNew = carFeignClient.save(car);
+        return carNew;
+    }
+
+    public Bike saveBike(int userId, Bike bike){
+        bike.setUserId(userId);
+        Bike bikeNew = bikeFeignClient.save(bike);
+        return bikeNew;
     }
 
 }

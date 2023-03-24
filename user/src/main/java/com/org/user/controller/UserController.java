@@ -63,5 +63,19 @@ public class UserController {
         return ResponseEntity.ok(bikes);
     }
 
+    // Con Feign Client
+
+    @PostMapping("/savecar/{userId}")
+    public ResponseEntity<Car> saveCar(@PathVariable("userId") int userId, @RequestBody Car car){
+       Car carNew = userService.saveCar(userId, car);
+       return ResponseEntity.ok(carNew);
+    }
+
+    @PostMapping("/savebike/{userId}")
+    public ResponseEntity<Bike> saveBike(@PathVariable("userId") int userId, @RequestBody Bike bike){
+        Bike bikeNew = userService.saveBike(userId, bike);
+        return ResponseEntity.ok(bikeNew);
+    }
+
 
 }
